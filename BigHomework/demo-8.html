@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>评分</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+}
+
+#wrap {
+    width: 485px;
+    margin: 20px auto;
+}
+
+#mark {
+    line-height: 1.5em;
+}
+
+#mark h1 {
+    height: 29px;
+    background: url(../images/bg.jpg);
+    font-family: "黑体";
+    font-size: 12px;
+    color: #666;
+    line-height: 29px;
+    padding-left: 20px;
+    letter-spacing: 2px;
+    /* 字之间的距离 */
+}
+
+#pic {
+    margin: 10px 0px;
+}
+
+#txt {
+    width: 100%;
+    height: 170px;
+    margin: 0px auto;
+}
+
+.btn {
+    width: 75px;
+    height: 22px;
+    background: url(../images/sanjiao.png) no-repeat right center;
+    float: right;
+    margin: 10px;
+}
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <div id="mark">
+            <h1>宝贝与描述相符(打分匿名)</h1>
+            <div id="pic">
+                <img src="images/star0.png" title="1" name="0"/>
+                <img src="images/star0.png" title="2" name="1"/>
+                <img src="images/star0.png" title="3" name="2"/>
+                <img src="images/star0.png" title="4" name="3"/>
+                <img src="images/star0.png" title="5" name="4"/>
+                <br/>
+            </div>
+            <form>
+                <textarea cols="40" rows="8" value="" id='txt'></textarea>
+                <br/>
+                <button class="btn">公开评论</button>
+            </form>
+        </div>
+    </div>
+</body>
+<script>
+    var pic = document.getElementById("pic");
+var picList = pic.getElementsByTagName("img");
+var txt = document.getElementById("txt");
+var comments = ["差", "一般", "中等", "还行", "好"];
+var flag = true;
+
+for(var i = 0; i < picList.length; i++) {
+    picList[i].onmouseover = function() {
+        if(!flag) {
+            return;
+        }
+        var index = this.getAttribute("title");
+        var imgSrc = "";
+        if(index <= 2) {
+            imgSrc = "./images/star1.png";
+        }
+        else {
+            imgSrc = "./images/star2.png";
+        }            
+        for(var j = 0; j < index; j++) {
+            picList[j].src = imgSrc;
+        }
+        txt.innerHTML = comments[index - 1];
+    }
+    picList[i].onmouseout = function() {
+        if(!flag) {
+            return;
+        }
+        for(var j = 0; j < picList.length; j++) {
+            picList[j].src = "./images/star0.png";
+        }
+        txt.innerHTML = "";
+    }
+    picList[i].onclick = function() {
+        flag = !flag;
+    }
+}
+</script>
+</html>
